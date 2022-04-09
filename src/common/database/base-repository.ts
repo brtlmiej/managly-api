@@ -1,4 +1,4 @@
-import { FindManyOptions, Repository } from 'typeorm/index';
+import { FindManyOptions, Repository } from 'typeorm';
 import { Paginator } from './paginator';
 
 export class BaseRepository<T> extends Repository<T>{
