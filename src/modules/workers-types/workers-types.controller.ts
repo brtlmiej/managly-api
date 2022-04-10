@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { ClassSerializerInterceptor, Controller, Get, UseInterceptors } from '@nestjs/common';
 import { WorkersTypesRepository } from './workers-types.repository';
 import { ApiResponse } from '@nestjs/swagger';
 import { WorkerType } from './worker-type.entity';
@@ -10,6 +10,7 @@ export class WorkersTypesController {
   ) {}
 
   @Get()
+  @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({ type: [WorkerType], description: 'Get all worker types' })
   async findAll() {
     return await this.workersTypesRepository.find();
