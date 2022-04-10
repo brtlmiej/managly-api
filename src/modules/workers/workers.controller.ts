@@ -1,4 +1,14 @@
-import { Body, Controller, Get, HttpCode, NotFoundException, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  HttpCode,
+  NotFoundException,
+  Param,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { WorkersRepository } from './workers.repository';
 import { WorkerDto } from './dto/worker.dto';
 import { WorkersService } from './workers.service';
@@ -14,6 +24,7 @@ export class WorkersController {
   ) {}
 
   @Get()
+  @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({ type: [Worker], description: 'Get all workers' })
   async findAll() {
     return await this.workersRepository.find(
@@ -26,10 +37,11 @@ export class WorkersController {
   }
 
   @Get(':id')
+  @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({ type: Worker, description: 'Get one worker by id' })
   async findOne(@Param('id') id: number) {
     const worker = await this.workersRepository.findOne(id, {
-      where: { deletedAt: null }
+      where: { deletedAt: null },
     });
     if (!worker) {
       throw new NotFoundException('Worker not found');
@@ -38,6 +50,7 @@ export class WorkersController {
   }
 
   @Post()
+  @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({ type: Worker, description: 'Create worker' })
   async create(@Body() data: WorkerDto) {
     let worker;
@@ -48,6 +61,7 @@ export class WorkersController {
   }
 
   @Post(':id')
+  @UseInterceptors(ClassSerializerInterceptor)
   @HttpCode(200)
   @ApiResponse({ type: Worker, description: 'Update worker' })
   async update(

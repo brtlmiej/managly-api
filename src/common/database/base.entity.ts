@@ -5,6 +5,7 @@ import {
   BaseEntity as TypeOrmBaseEntity, Column,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 
 export class BaseEntity extends TypeOrmBaseEntity {
   @ApiProperty()
@@ -19,6 +20,7 @@ export class BaseEntity extends TypeOrmBaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @Exclude()
   @Column({ type: 'datetime', nullable: true })
   deletedAt: Date | null;
 }
