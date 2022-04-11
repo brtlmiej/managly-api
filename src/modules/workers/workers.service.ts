@@ -29,6 +29,11 @@ export class WorkersService {
   }
 
   async remove(em: EntityManager, worker: Worker) {
+    const tables = await worker.tables;
+    for (const table of tables) {
+      table.waiter = null;
+      await em.save(table);
+    }
     worker.deletedAt = new Date();
     await  em.save(worker);
   }

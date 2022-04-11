@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { databaseConfig } from './common/database/config';
 import { WorkersTypesModule } from './modules/workers-types/workers-types.module';
 import { WorkersModule } from './modules/workers/workers.module';
+import { TablesModule } from './modules/tables/tables.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { WorkersModule } from './modules/workers/workers.module';
     TypeOrmModule.forRoot(databaseConfig()),
     WorkersTypesModule,
     WorkersModule,
+    TablesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

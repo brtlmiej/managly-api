@@ -1,8 +1,9 @@
-import { Column, Entity, ManyToOne, RelationId } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, RelationId } from 'typeorm';
 import { BaseEntity } from '../../common/database/base.entity';
 import { WorkerType } from '../workers-types/worker-type.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
+import { Table } from '../tables/table.entity';
 
 @Entity()
 export class Worker extends BaseEntity {
@@ -25,4 +26,7 @@ export class Worker extends BaseEntity {
   @ApiProperty()
   @RelationId('type')
   typeId: number;
+
+  @OneToMany(() => Table, (obj) => obj.waiter)
+  tables: Table[];
 }
