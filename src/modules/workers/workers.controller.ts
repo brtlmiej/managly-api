@@ -87,7 +87,8 @@ export class WorkersController {
     @Param('id') id: number,
   ) {
     const worker = await this.workersRepository.findOne(id, {
-      where: { deletedAt: null }
+      where: { deletedAt: null },
+      relations: ['tables'],
     });
     if (!worker) {
       throw new NotFoundException('Worker not found');

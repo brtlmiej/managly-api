@@ -4,6 +4,7 @@ import { EntityManager } from 'typeorm';
 import { Table } from './table.entity';
 import { WorkersRepository } from '../workers/workers.repository';
 import { TablesRepository } from './tables.repository';
+import { NotEquals } from 'class-validator';
 
 @Injectable()
 export class TablesService {
@@ -32,7 +33,7 @@ export class TablesService {
         deletedAt: null
       }
     });
-    if (exist) {
+    if (exist && exist.id != table.id) {
       throw new BadRequestException('Table with given number already exist');
     }
     table.waiter = waiter;
